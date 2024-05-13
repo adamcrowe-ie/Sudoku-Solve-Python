@@ -23,7 +23,7 @@ class Grid:
             string += "\n\n" if i % self._box_height == 0 else "\n"
             for j, square in enumerate(row):
                 string += "   " if j % self._box_width == 0 else " "
-                string += str(square["value"]) if square["value"] != 0 else "\u2610"
+                string += str(square.value) if square.value != 0 else "\u2610"
         
         string += "\n"
         return string
