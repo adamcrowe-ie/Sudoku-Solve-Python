@@ -1,3 +1,7 @@
+from collections import namedtuple
+
+Square = namedtuple("Square", ["value", "possible_values"])
+
 class Grid:
     def __init__(self, box_width, box_height):
         # box_width & box_height determine the width/height of the boxes that subdivide the grid
@@ -5,9 +9,7 @@ class Grid:
         self._length = box_width * box_height
         
         # square template - value is zero, and can take any value from 1 to L
-        square = {
-            "value": 0
-        }
+        square = Square(0, [True]*self._length)
 
         # initialise grid as 2D list
         row = [square for i in range(self._length)]
