@@ -1,5 +1,7 @@
+from grid import Grid
+
 def main():
-    print("Hello World!")
+    grid = Grid(3,3)
 
 if __name__ == "__main__":
     main()
