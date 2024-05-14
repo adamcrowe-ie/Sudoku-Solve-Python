@@ -6,6 +6,7 @@ class Square:
         self.position = position
         self.value = 0
         self.possible_values = [(i+1) for i in range(grid.length)]
+        self.highlight = False
 
     def set_value(self, value):
         if value == 0:
@@ -14,12 +15,11 @@ class Square:
             self.value = value
             self.possible_values = []
 
-            for cosquare in self.subdivisions():
-                if value in cosquare.possible_values:
-                    cosquare.possible_values.remove(value)
+            for square in self.subdivisions():
+                if value in square.possible_values:
+                    square.possible_values.remove(value)
             
             return True
-        
         return False
 
     def row(self):

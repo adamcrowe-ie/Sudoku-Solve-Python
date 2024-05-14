@@ -5,7 +5,11 @@ from position import Position
 
 def input_grid(grid):
     for square in grid.iterate():
+        
+        square.highlight = True
         print(grid)
+        square.highlight = False
+
         loop_condition = True
         while loop_condition:
             print("Enter value:")

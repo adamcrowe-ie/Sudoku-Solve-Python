@@ -33,7 +33,11 @@ class Grid:
                 string += "\n\n" if x % self.box_height == 0 else "\n"
 
             string += "   " if y % self.box_width == 0 else " "
-            string += str(square.value) if square.value != 0 else "\u2610"
+            
+            if square.highlight:
+                string += "X"
+            else:
+                string += str(square.value) if square.value != 0 else "\u2610"
                  
         string += "\n"
         return string
