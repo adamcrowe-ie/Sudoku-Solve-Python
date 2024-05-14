@@ -1,5 +1,6 @@
 from position import Position
 from square import Square
+from subdivisions import Row, Column, Box
 
 class Grid:
     def __init__(self, box_width, box_height):
@@ -7,15 +8,18 @@ class Grid:
         self.box_width, self.box_height = box_width, box_height
         self.length = box_width * box_height
         self.size = self.length ** 2 
-
-        self._counter = 0  # counter for our iterator
-        self.squares = [[] for i in range(self.length)]
+        
+        self.squares = [[] for _ in range(self.length)]
         
         for i in range(self.length):
             for j in range(self.length):
-                position = Position(i, j)
+                position = Position(self, i, j)
                 square = Square(self, position)
                 self.squares[i].append(square)
+
+        self.rows = [Row(self, i) for i in range(self.length)]
+        self.columns = [Column(self, i) for i in range(self.length)]
+        self.boxes = [Box(self, i) for i in range(self.length)]
 
     def iterate(self):
         for i in range(self.length):
@@ -27,12 +31,12 @@ class Grid:
         string = "\n"  # our string we return
 
         for square in self.iterate():
-            x, y = square.position
+            row, column = square.position.row, square.position.column
 
-            if x != 0 and y == 0:
-                string += "\n\n" if x % self.box_height == 0 else "\n"
+            if row != 0 and column == 0:
+                string += "\n\n" if row % self.box_height == 0 else "\n"
 
-            string += "   " if y % self.box_width == 0 else " "
+            string += "   " if column % self.box_width == 0 else " "
             
             if square.highlight:
                 string += "X"

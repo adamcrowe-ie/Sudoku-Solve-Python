@@ -1,11 +1,9 @@
-import random
-
 from grid import Grid
-from position import Position
+from solve import solve
 
 def input_grid(grid):
     for square in grid.iterate():
-        
+
         square.highlight = True
         print(grid)
         square.highlight = False
@@ -17,9 +15,9 @@ def input_grid(grid):
             loop_condition = not square.set_value(value)
 
 def main():
-    grid = Grid(3,3)
+    grid = Grid(3, 2)
     input_grid(grid)
-    
+    solve(grid)
 
 if __name__ == "__main__":
     main()
