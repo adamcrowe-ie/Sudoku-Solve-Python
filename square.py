@@ -5,7 +5,7 @@ class Square:
         self.grid = grid
         self.position = position
         self.value = 0
-        self.possible_values = [(i+1) for i in range(grid.length)]
+        self.possible_values = [(i+1) for i in grid.range()]
         self.highlight = False
 
     def set_value(self, value, update_possibilities=True):

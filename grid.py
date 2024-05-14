@@ -7,30 +7,29 @@ class Grid:
         # box_width & box_height determine the width/height of the boxes that subdivide the grid
         self.box_width, self.box_height = box_width, box_height
         self.length = box_width * box_height
-        self.size = self.length ** 2 
-        
-        self.squares = [[] for _ in range(self.length)]
-        
-        for i in range(self.length):
-            for j in range(self.length):
+
+        self.to_index = lambda row, column: (row * self.length) + column
+
+        self.squares = []
+        for i in self.range():
+            for j in self.range():
                 position = Position(self, i, j)
                 square = Square(self, position)
-                self.squares[i].append(square)
+                self.squares.append(square)
 
-        self.rows = [Row(self, i) for i in range(self.length)]
-        self.columns = [Column(self, i) for i in range(self.length)]
-        self.boxes = [Box(self, i) for i in range(self.length)]
+        self.rows = [Row(self, i) for i in self.range()]
+        self.columns = [Column(self, i) for i in self.range()]
+        self.boxes = [Box(self, i) for i in self.range()]
 
-    def iterate(self):
+    def range(self):
         for i in range(self.length):
-            for j in range(self.length):
-                yield self.squares[i][j]
+            yield i
 
     # acts as a way to print out our grid
     def __str__(self):
         string = "\n"  # our string we return
 
-        for square in self.iterate():
+        for square in self.squares:
             row, column = square.position.row, square.position.column
 
             if row != 0 and column == 0:

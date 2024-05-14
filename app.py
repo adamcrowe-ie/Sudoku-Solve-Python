@@ -2,7 +2,7 @@ from grid import Grid
 from solve import solve
 
 def input_grid(grid):
-    for square in grid.iterate():
+    for square in grid.squares:
 
         square.highlight = True
         print(grid)
