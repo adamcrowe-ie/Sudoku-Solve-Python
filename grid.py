@@ -1,25 +1,27 @@
 from position import Position
 from square import Square
-from subdivisions import Row, Column, Box
+from subdivisions import Subdivision, Row, Column, Box
 
 class Grid:
     def __init__(self, box_width, box_height):
         # box_width & box_height determine the width/height of the boxes that subdivide the grid
         self.box_width, self.box_height = box_width, box_height
+        Position.box_width, Position.box_height = box_width, box_height
+
         self.length = box_width * box_height
 
-        self.to_index = lambda row, column: (row * self.length) + column
-
+        Square.grid = self
         self.squares = []
         for i in self.range():
             for j in self.range():
-                position = Position(self, i, j)
-                square = Square(self, position)
+                position = Position(i, j)
+                square = Square(position)
                 self.squares.append(square)
 
-        self.rows = [Row(self, i) for i in self.range()]
-        self.columns = [Column(self, i) for i in self.range()]
-        self.boxes = [Box(self, i) for i in self.range()]
+        Subdivision.grid = self
+        self.rows = [Row(i) for i in self.range()]
+        self.columns = [Column(i) for i in self.range()]
+        self.boxes = [Box(i) for i in self.range()]
 
     def range(self):
         for i in range(self.length):

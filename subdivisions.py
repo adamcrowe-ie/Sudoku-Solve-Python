@@ -1,35 +1,50 @@
+from position import Position
+
 class Subdivision:
-    def generator(self):
+    def iterate(self):
         length = self.grid.length
         return (self.squares[i] for i in self.grid.range())
 
 
 class Row(Subdivision):
-    def __init__(self, grid, row):
-        self.grid = grid
-        self.squares = [ grid.squares[ grid.to_index(row, column) ] for column in grid.range()]
+    def __init__(self, row):
+        grid = self.grid
+        self.squares = []
+
+        for column in grid.range():
+            index = Position(row, column).index
+            square = grid.squares[index]
+            self.squares.append(square)
 
 
 class Column(Subdivision):
-    def __init__(self, grid, column):
-        self.grid = grid
-        self.squares = [ grid.squares[ grid.to_index(row, column) ] for row in grid.range()]
-
-
-class Box(Subdivision):
-    def __init__(self, grid, box):
-        self.grid = grid
+    def __init__(self, column):
+        grid = self.grid
         self.squares = []
 
-        box_w, box_h = grid.box_width, grid.box_height
+        for row in grid.range():
+            index = Position(row, column).index
+            square = grid.squares[index]
+            self.squares.append(square)
 
-        box_row = box // box_h
-        box_column = box % box_h
-        starting_row = box_row * box_h
-        starting_column = box_column * box_w
-        starting_index = grid.to_index(starting_row, starting_column)
+class Box(Subdivision):
+    def __init__(self, box):
+        self.squares = []
+        
+        grid = self.grid
+        box_width, box_height = grid.box_width, grid.box_height
+
+        box_row = box // box_height
+        box_column = box % box_height
+        starting_row = box_row * box_height
+        starting_column = box_column * box_width
+        starting_index = Position(starting_row, starting_column).index
 
         for i in grid.range():
-            index = starting_index + grid.to_index(i // box_w, i % box_w)
+            iterated_row = i // box_width
+            iterated_column = i % box_width
+            iterated_index =  Position(iterated_row, iterated_column).index
+
+            index = starting_index + iterated_index
             square = grid.squares[index]
             self.squares.append(square)

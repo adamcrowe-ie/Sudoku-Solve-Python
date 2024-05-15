@@ -1,11 +1,10 @@
 from position import Position
 
 class Square:
-    def __init__(self, grid, position):
-        self.grid = grid
+    def __init__(self, position):
         self.position = position
         self.value = 0
-        self.possible_values = [(i+1) for i in grid.range()]
+        self.possible_values = [(i+1) for i in self.grid.range()]
         self.highlight = False
 
     def set_value(self, value, update_possibilities=True):
@@ -28,6 +27,6 @@ class Square:
         column = self.position.column 
         box = self.position.box
 
-        yield from grid.rows[row].generator()
-        yield from grid.columns[column].generator()
-        yield from grid.boxes[box].generator()
+        yield from grid.rows[row].iterate()
+        yield from grid.columns[column].iterate()
+        yield from grid.boxes[box].iterate()
