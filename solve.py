@@ -8,6 +8,7 @@ from square import ValueNotPossibleException
 # 3. Locked cells type I
 # 4. Locked cells type II
 # 5. Directional elimination
+# 6. Guess Values
 
 def solve(grid):
     while (not grid.check_solved() and 
