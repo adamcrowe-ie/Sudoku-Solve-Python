@@ -98,6 +98,7 @@ def find_typeII_locked_squares(grid):
 
             if change:
                 return True
+    return False
 
 def directional_elimination(grid):
     for box in grid.boxes:
@@ -160,6 +161,7 @@ def guess_values(grid):
                 if not sq.value:
                     sq.set_value(new_grid.squares[i].value)
             return True
+    return False
 
 
 def find_shared_squares(squares):
