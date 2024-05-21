@@ -1,16 +1,20 @@
 from position import Position
 
 class Subdivision:
-    def iterate(self):
-        length = self.grid.length
-        return (self.squares[i] for i in self.grid.range())
-
+    def get_empty_squares(self):
+        return {square for square in self.squares if not square.value}
+    
+    def __repr__(self):
+        return f"{self.type} {self.index + 1}"
 
 class Row(Subdivision):
     def __init__(self, row):
-        grid = self.grid
+        self.checked = False
+        self.type = "Row"
+        self.index = row
         self.squares = []
 
+        grid = self.grid
         for column in grid.range():
             index = Position(row, column).index
             square = grid.squares[index]
@@ -19,9 +23,12 @@ class Row(Subdivision):
 
 class Column(Subdivision):
     def __init__(self, column):
-        grid = self.grid
+        self.checked = False
+        self.type = "Column"
+        self.index = column
         self.squares = []
 
+        grid = self.grid
         for row in grid.range():
             index = Position(row, column).index
             square = grid.squares[index]
@@ -29,6 +36,9 @@ class Column(Subdivision):
 
 class Box(Subdivision):
     def __init__(self, box):
+        self.checked = False
+        self.type = "Box"
+        self.index = box
         self.squares = []
         
         grid = self.grid

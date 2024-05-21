@@ -9,6 +9,7 @@ class Grid:
         Position.box_width, Position.box_height = box_width, box_height
 
         self.length = box_width * box_height
+        self.empty_squares = self.length**2
 
         Square.grid = self
         self.squares = []
@@ -22,10 +23,17 @@ class Grid:
         self.rows = [Row(i) for i in self.range()]
         self.columns = [Column(i) for i in self.range()]
         self.boxes = [Box(i) for i in self.range()]
+        self.subdivisions = self.rows + self.columns + self.boxes
 
     def range(self):
         for i in range(self.length):
             yield i
+
+    def check_solved(self):
+        for square in self.squares:
+            if not square.value:
+                return False
+        return True
 
     # acts as a way to print out our grid
     def __str__(self):
@@ -41,8 +49,12 @@ class Grid:
             
             if square.highlight:
                 string += "X"
+            elif square.value != 0:
+                string += str(square.value)
+            elif square.locked:
+                string += "L"
             else:
-                string += str(square.value) if square.value != 0 else "\u2610"
+                string += "\u2610"
                  
         string += "\n"
         return string

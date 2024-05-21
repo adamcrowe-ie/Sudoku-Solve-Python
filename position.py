@@ -3,7 +3,6 @@ class Position:
         box_width, box_height = self.box_width, self.box_height
         grid_length = box_width * box_height
 
-        
         if len(args) == 1:              # if position defined from index
             self.index = args[0]
             self.row = self.index // grid_length

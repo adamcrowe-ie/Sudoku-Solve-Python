@@ -4,11 +4,14 @@ from solve import solve
 def input_grid(grid):
     for square in grid.squares:
         print_grid(grid, square)
-        loop_condition = True
-        while loop_condition:
+        while True:
             print("Enter value:")
             value = int(input())
-            loop_condition = not square.set_value(value)
+            try:
+                square.set_value(value)
+            except ValueNotPossibleException:
+                continue
+            break
 
 def print_grid(grid, highlighted_square):
     highlighted_square.highlight = True
@@ -16,9 +19,13 @@ def print_grid(grid, highlighted_square):
     highlighted_square.highlight = False
 
 def main():
-    grid = Grid(3, 2)
+    grid = Grid(3, 3)
     input_grid(grid)
+
+    print(grid)
+    print("Solving...")
     solve(grid)
+    print(grid)
 
 if __name__ == "__main__":
     main()
